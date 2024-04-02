@@ -11,7 +11,46 @@ public class BulletManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bulletPool = new ObjectPool<GameObject>(createFunc: SpawnBullet, actionOnGet: SendBullet, actionOnRelease: StopBullet, actionOnDestroy: DestroyBullet, collectionCheck: false, defaultCapacity: 10, maxSize: 15);
+        bulletPool = new ObjectPool<GameObject>(
+            createFunc: SpawnBullet, 
+            actionOnGet: OnBulletRetrieved, 
+            actionOnRelease: OnBulletReleased, 
+            actionOnDestroy: OnBulletDestroyed, 
+            collectionCheck: false, 
+            defaultCapacity: 20, 
+            maxSize: 25);
     }
 
+    private GameObject SpawnBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefab);
+        bullet.SetActive(false);
+        return bullet;
+    }
+
+    private void OnBulletRetrieved(GameObject bullet)
+    {
+        bullet.SetActive(true);
+    }
+
+    private void OnBulletReleased(GameObject bullet)
+    {
+        bullet.SetActive(false);
+    }
+
+    private void OnBulletDestroyed(GameObject bullet)
+    {
+        Destroy(bullet);
+    }
+
+    public GameObject GetBullet()
+    {
+        GameObject bullet = bulletPool.Get();
+        return bullet;
+    }
+
+    public void StoreBullet(GameObject bullet)
+    {
+        bulletPool.Release(bullet);
+    }
 }

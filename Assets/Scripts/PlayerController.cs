@@ -5,12 +5,15 @@ using UnityEngine.Pool;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 10f;
     private float rotationSpeed = 100f;
+    private Player player;
+
+    [SerializeField] private BulletManager bulletManager;
+    [SerializeField] private GameManager gameManager;
 
     void Start()
     {
-        
+        player = gameManager._player;
     }
 
     // Update is called once per frame
@@ -18,6 +21,11 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Bounds();
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Debug.Log(player.Speed);
+        }
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -27,13 +35,12 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        //float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalRotation = Input.GetAxis("Horizontal");
 
         transform.Rotate(Vector3.up, horizontalRotation * rotationSpeed * Time.deltaTime);
 
-        Vector3 movement = new Vector3(0, 0, verticalInput) * speed * Time.deltaTime;
+        Vector3 movement = new Vector3(0, 0, verticalInput) * player.Speed * Time.deltaTime;
         transform.Translate(movement, Space.Self);
     }
 
@@ -60,5 +67,12 @@ public class PlayerController : MonoBehaviour
             Vector3 temp = new Vector3(transform.position.x, -5.5f, transform.position.z);
             transform.position = temp;
         }
+    }
+
+    private void Shoot()
+    {
+        GameObject bullet = bulletManager.GetBullet();
+        bullet.transform.position = transform.position;
+        bullet.transform.rotation = transform.rotation;
     }
 }
