@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Bounds();
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        }
     }
 
     private void Move()
