@@ -1,7 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//////////////////////////////////////////////
+//Assignment/Lab/Project: Space Shooter
+//Name: Hunter Wright
+//Section: SGD.213.2172
+//Instructor: Brian Sowers
+//Date: 4/8/2024
+/////////////////////////////////////////////
 public class Bullet : MonoBehaviour
 {
     private float speed = 12f;
@@ -24,7 +30,6 @@ public class Bullet : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        Debug.Log("Bullet has exited camera");
         ReturnBullet();
     }
 
@@ -34,7 +39,7 @@ public class Bullet : MonoBehaviour
         transform.Translate(movement, Space.Self);
     }
 
-    private void ReturnBullet()
+    public void ReturnBullet()
     {
         bulletManager.StoreBullet(gameObject);
     }

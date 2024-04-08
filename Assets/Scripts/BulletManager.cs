@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-
+//////////////////////////////////////////////
+//Assignment/Lab/Project: Space Shooter
+//Name: Hunter Wright
+//Section: SGD.213.2172
+//Instructor: Brian Sowers
+//Date: 4/8/2024
+/////////////////////////////////////////////
 public class BulletManager : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
@@ -17,8 +23,8 @@ public class BulletManager : MonoBehaviour
             actionOnRelease: OnBulletReleased, 
             actionOnDestroy: OnBulletDestroyed, 
             collectionCheck: false, 
-            defaultCapacity: 20, 
-            maxSize: 25);
+            defaultCapacity: 20,
+            maxSize: 1000);
     }
 
     private GameObject SpawnBullet()
@@ -30,12 +36,19 @@ public class BulletManager : MonoBehaviour
 
     private void OnBulletRetrieved(GameObject bullet)
     {
-        bullet.SetActive(true);
+        if (bullet != null)
+        {
+            bullet.SetActive(true);
+        }
     }
 
     private void OnBulletReleased(GameObject bullet)
     {
-        bullet.SetActive(false);
+        if (bullet != null)
+        {
+            bullet.SetActive(false);
+            
+        }
     }
 
     private void OnBulletDestroyed(GameObject bullet)
@@ -51,6 +64,9 @@ public class BulletManager : MonoBehaviour
 
     public void StoreBullet(GameObject bullet)
     {
-        bulletPool.Release(bullet);
+        if (bullet != null)
+        {
+            bulletPool.Release(bullet);
+        }
     }
 }

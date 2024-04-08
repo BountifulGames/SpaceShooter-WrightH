@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //////////////////////////////////////////////
-//Assignment/Lab/Project: Vitual Pet
+//Assignment/Lab/Project: Space Shooter
 //Name: Hunter Wright
 //Section: SGD.213.2172
 //Instructor: Brian Sowers
-//Date: 2/26/2024
+//Date: 4/8/2024
 /////////////////////////////////////////////
 public class MainMenuController : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class MainMenuController : MonoBehaviour
     // Code for running the main menu UI
     public void OnPlayButtonPress()
     {
-        SceneManager.LoadScene("VirtualPet");
+        SceneManager.LoadScene("Shooter");
     }
 
     public void OnInstructionsButtonPress()

@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-
+//////////////////////////////////////////////
+//Assignment/Lab/Project: Space Shooter
+//Name: Hunter Wright
+//Section: SGD.213.2172
+//Instructor: Brian Sowers
+//Date: 4/8/2024
+/////////////////////////////////////////////
 public class PlayerController : MonoBehaviour
 {
     private float rotationSpeed = 100f;
@@ -74,5 +80,32 @@ public class PlayerController : MonoBehaviour
         GameObject bullet = bulletManager.GetBullet();
         bullet.transform.position = transform.position;
         bullet.transform.rotation = transform.rotation;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Powerup"))
+        {
+            Powerups powerUp = other.gameObject.GetComponent<Powerups>();
+            powerUp.ActivatePower(player);
+            Destroy(other.gameObject.transform.parent.gameObject);
+
+            Debug.Log("Health: " + player.Health);
+            Debug.Log("Speed: " + player.Speed);
+            Debug.Log("Score: " + player.Score);
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            player.TakeDamage();
+            Destroy(other.gameObject.transform.parent.gameObject);
+        }
+
+        gameManager.UpdateUI();
+
+        if (player.Health <= 0)
+        {
+            gameManager.GameOver();
+        }
     }
 }
